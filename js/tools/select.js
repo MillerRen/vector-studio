@@ -1,3 +1,5 @@
+import icon from '../../img/tools/tool_select.svg?raw'
+
 var hitResult = null
 var guide
 var hitOptions = {
@@ -104,5 +106,7 @@ tool.onMouseDrag = function onMouseDrag (event) {
       throw new Error('Unknown dir'+hitResult.type)
   }
 }
+
+tool.icon = icon
 
 export default tool

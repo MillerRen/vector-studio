@@ -4,8 +4,8 @@ import pencil from '../tools/pencil'
 // TODO: 工具界面
 export default class Tool {
   tools = {
+    select,
     pencil,
-    select
   }
 
   constructor () {
@@ -21,23 +21,24 @@ export default class Tool {
   }
 
   select (tool) {
-    console.log(tool)
     this.tools[tool].activate()
   }
 
   createTools () {
-    Object.keys(this.tools).map(k => {
-      this.createTool(k)
+    Object.values(this.tools).map(tool => {
+      this.createTool(tool)
     })
   }
 
-  createTool (name) {
-    var tool = document.createElement('li')
-    tool.setAttribute('class', 'tools-item')
-    tool.innerHTML = name
-    tool.addEventListener('click', () => {
-      this.select(name)
+  createTool (tool) {
+    var icon = document.createElement('svg')
+    var el = document.createElement('li')
+    el.setAttribute('class', 'tools-item')
+    icon.innerHTML = tool.icon
+    el.appendChild(icon)
+    el.addEventListener('click', () => {
+      this.select(tool.name)
     })
-    this.root.appendChild(tool)
+    this.root.appendChild(el)
   }
 }

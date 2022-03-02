@@ -1,3 +1,5 @@
+import icon from '../../img/tools/tool_draw.svg?raw'
+
 var Path = paper.Path
 var path = null
 var tool = new paper.Tool({
@@ -18,6 +20,7 @@ tool.onMouseDrag = function (event) {
 tool.onMouseUp = function (event) {
   path.simplify()
 }
-console.log(paper.tool, paper.tools)
+
+tool.icon = icon
 
 export default tool
