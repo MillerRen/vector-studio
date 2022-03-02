@@ -51,6 +51,7 @@ export default class Workspace {
 
   createTool () {
     this.tool = new Tool()
+    this.mainArea.content.appendChild(this.tool.root)
   }
 
   createSidePanel () {

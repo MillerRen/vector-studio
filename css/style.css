@@ -7,3 +7,16 @@
 #mainmenubar > ul > li {
 	padding: 4px 20px;
 }
+
+#tools {
+	position:absolute;
+	top: 0;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+#tools .tools-item {
+	height: 20px;
+	cursor: pointer;
+}
