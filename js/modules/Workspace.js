@@ -69,7 +69,7 @@ export default class Workspace {
   createInspector () {
     this.inspector = new LiteGUI.Inspector()
     this.inspector.onchange = function (name, value, widget) {
-      
+      paper.project.currentStyle[name] = value
     }
     this.sidePanel.content.appendChild(this.inspector.root)
     this.inspector.inspectInstance(paper.project.currentStyle)
