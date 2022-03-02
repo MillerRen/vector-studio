@@ -1,15 +1,14 @@
 import Menubar from './Menubar'
-import Editor from './Editor'
 import Inspector from './Inspector'
 import Tool from './Tool'
 
 export default class Workspace {
   menubar = null
   mainArea = null
-  editor = null
   canvas = null
 
-  constructor () {
+  constructor (data) {
+    this.data = data
     this.init()
   }
 
@@ -20,6 +19,10 @@ export default class Workspace {
     this.createEditor()
     this.createTool()
     this.createInspector()
+    this.render()
+    paper.project.currentStyle = {
+      strokeColor: 'black'
+    }
   }
 
   createMenubar () {
@@ -46,7 +49,7 @@ export default class Workspace {
     this.canvas.style.background = '#ffffff'
     this.mainArea.content.appendChild(this.canvas)
     this.mainArea.onresize = () => this.resize()
-    this.editor = new Editor(this.canvas)
+    paper.setup(this.canvas)
   }
 
   createTool () {
@@ -64,12 +67,21 @@ export default class Workspace {
   }
 
   createInspector () {
-    this.inspector = new Inspector(this.sidePanel)
+    this.inspector = new LiteGUI.Inspector()
+    this.inspector.onchange = function (name, value, widget) {
+      
+    }
+    this.sidePanel.content.appendChild(this.inspector.root)
+    this.inspector.inspectInstance(paper.project.currentStyle)
   }
 
   resize () {
     var rect = this.canvas.parentNode.getClientRects()[0];
 		this.canvas.width = rect.width;
 		this.canvas.height = rect.height;
+  }
+
+  render () {
+    
   }
 }

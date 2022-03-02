@@ -3,13 +3,13 @@ import icon from '../../img/tools/tool_draw.svg?raw'
 var Path = paper.Path
 var path = null
 var tool = new paper.Tool({
-  name: 'pencil'
+  name: 'pencil',
+  test: 'ssss'
 })
 
 tool.onMouseDown = function (event) {
-  path = new Path({
-    strokeColor: '#009dec'
-  })
+  console.log(this)
+  path = new Path()
   path.moveTo(event.point)
 }
 
