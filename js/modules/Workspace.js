@@ -1,6 +1,7 @@
 import Menubar from './Menubar'
 import Editor from './Editor'
 import Inspector from './Inspector'
+import Tool from './Tool'
 
 export default class Workspace {
   menubar = null
@@ -16,6 +17,8 @@ export default class Workspace {
     this.createMenubar()
     this.createMainArea()
     this.createSidePanel()
+    this.createEditor()
+    this.createTool()
     this.createInspector()
   }
 
@@ -31,16 +34,23 @@ export default class Workspace {
       height: 'calc( 100% - 32px )',
       inmediateResize: true
     })
+    this.mainArea.split('horizontal', [null, 300], true)
     LiteGUI.add(this.mainArea)
+  }
 
+  createEditor () {
     this.canvas = document.createElement('canvas')
     this.canvas.setAttribute('resize', 'true')
     this.canvas.style.width = '100%'
     this.canvas.style.height = '100%'
+    this.canvas.style.background = '#ffffff'
     this.mainArea.content.appendChild(this.canvas)
     this.mainArea.onresize = () => this.resize()
-
     this.editor = new Editor(this.canvas)
+  }
+
+  createTool () {
+    this.tool = new Tool()
   }
 
   createSidePanel () {
@@ -48,7 +58,7 @@ export default class Workspace {
       title: 'side panel',
       close: true
     })
-    this.mainArea.split('horizontal', [null, 300], true)
+    
     this.mainArea.getSection(1).add(this.sidePanel)
   }
 
