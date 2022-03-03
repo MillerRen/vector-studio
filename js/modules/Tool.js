@@ -11,7 +11,7 @@ export default class Tool {
   constructor () {
     this.root = document.createElement('ul')
     this.root.setAttribute('id', 'tools')
-    this.root.setAttribute('class', 'tools')
+    this.root.setAttribute('class', 'toolbar')
     this.init()
   }
 
@@ -33,7 +33,7 @@ export default class Tool {
   createTool (tool) {
     var icon = document.createElement('svg')
     var el = document.createElement('li')
-    el.setAttribute('class', 'tools-item')
+    el.setAttribute('class', 'tools-item tool tool_'+tool.name)
     icon.innerHTML = tool.icon
     el.appendChild(icon)
     el.addEventListener('click', () => {

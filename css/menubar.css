@@ -1,0 +1,10 @@
+
+/* menubar */
+#mainmenubar > ul {
+	padding-top: 4px;
+	padding-left: 64px;
+}
+
+#mainmenubar > ul > li {
+	padding: 4px 20px;
+}

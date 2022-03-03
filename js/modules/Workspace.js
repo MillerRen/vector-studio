@@ -20,9 +20,6 @@ export default class Workspace {
     this.createTool()
     this.createInspector()
     this.render()
-    paper.project.currentStyle = {
-      strokeColor: 'black'
-    }
   }
 
   createMenubar () {
@@ -50,6 +47,8 @@ export default class Workspace {
     this.mainArea.content.appendChild(this.canvas)
     this.mainArea.onresize = () => this.resize()
     paper.setup(this.canvas)
+    paper.project.currentStyle.strokeColor = 'green'
+    console.log(paper)
   }
 
   createTool () {
@@ -62,12 +61,18 @@ export default class Workspace {
       title: 'side panel',
       close: true
     })
-    
+    var tabs = new LiteGUI.Tabs()
+    tabs.addTab('图层')
+    tabs.addTab('通道')
+    tabs.addTab('路径')
+    this.sidePanel.add(tabs)
     this.mainArea.getSection(1).add(this.sidePanel)
   }
 
   createInspector () {
     this.inspector = new LiteGUI.Inspector()
+    var section = this.inspector.addSection('Current Style')
+    this.inspector.setCurrentSection(section)
     this.inspector.onchange = function (name, value, widget) {
       paper.project.currentStyle[name] = value
     }
