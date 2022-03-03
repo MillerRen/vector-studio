@@ -58,7 +58,7 @@ tool.onMouseDrag = function onMouseDrag (event) {
       item.position = item.position.add(event.delta)
       break
     case 'bounds':
-      var sx, xy
+      var sx, sy
       switch (hitResult.name) {
         case 'top-left':
           sx = (item.bounds.width - event.delta.x) / item.bounds.width

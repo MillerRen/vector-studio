@@ -8,6 +8,8 @@ export default class Tool {
     pencil,
   }
 
+  selectEl = null
+
   constructor () {
     this.root = document.createElement('ul')
     this.root.setAttribute('id', 'tools')
@@ -36,8 +38,15 @@ export default class Tool {
     el.setAttribute('class', 'tools-item tool tool_'+tool.name)
     icon.innerHTML = tool.icon
     el.appendChild(icon)
+    if(tool.name == paper.tool.name) {
+      el.classList.add('active')
+      this.selectEl = el
+    }
     el.addEventListener('click', () => {
       this.select(tool.name)
+      this.selectEl.classList.remove('active')
+      el.classList.add('active')
+      this.selectEl = el
     })
     this.root.appendChild(el)
   }
