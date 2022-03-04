@@ -8,7 +8,6 @@ var tool = new paper.Tool({
 })
 
 tool.onMouseDown = function (event) {
-  console.log(this)
   path = new Path()
   path.moveTo(event.point)
 }
@@ -19,6 +18,7 @@ tool.onMouseDrag = function (event) {
 
 tool.onMouseUp = function (event) {
   path.simplify()
+  tool.onChange(path)
 }
 
 tool.icon = icon

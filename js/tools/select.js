@@ -24,9 +24,20 @@ tool.onMouseDown = function (event) {
   })
   hitResult = paper.project.hitTest(event.point, hitOptions)
   if (hitResult) {
-    hitResult.item.selected = true
+    // hitResult.item.selected = true
     hitResult.item.bounds.selected = true
   }
+}
+
+tool.onMouseUp = function (event) {
+  var layer = paper.project.activeLayer
+  var items = layer.getItems({
+    inside: new paper.Rectangle(event.downPoint, event.point)
+  })
+  .forEach(item => {
+    item.bounds.selected = true
+  })
+  tool.onChange(items)
 }
 
 tool.onMouseDrag = function onMouseDrag (event) {
@@ -39,12 +50,11 @@ tool.onMouseDrag = function onMouseDrag (event) {
       fillColor: '#fff',
       dashArray: [3, 5]
     })
-    guide.fillColor.alpha = 0.1
+    guide.fillColor.alpha = 0.5
     guide.removeOn({
       drag: true,
       up: true
     })
-    // TODO: 多选与提示相交的形状
     return
   }
 

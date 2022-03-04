@@ -1,11 +1,13 @@
 import Menubar from './Menubar'
 import Inspector from './Inspector'
 import Tool from './Tool'
+import Editor from './Editor'
 
 export default class Workspace {
   menubar = null
   mainArea = null
   canvas = null
+  editor = null
 
   constructor (data) {
     this.data = data
@@ -13,17 +15,16 @@ export default class Workspace {
   }
 
   init () {
-    this.createMenubar()
     this.createMainArea()
     this.createSidePanel()
     this.createEditor()
+    this.createMenubar()
     this.createTool()
     this.createInspector()
-    this.render()
   }
 
   createMenubar () {
-    this.menubar = new Menubar()
+    this.menubar = new Menubar(this.editor)
   }
 
   createMainArea () {
@@ -39,52 +40,36 @@ export default class Workspace {
   }
 
   createEditor () {
-    this.canvas = document.createElement('canvas')
-    this.canvas.setAttribute('resize', 'true')
-    this.canvas.style.width = '100%'
-    this.canvas.style.height = '100%'
-    this.canvas.style.background = '#ffffff'
-    this.mainArea.content.appendChild(this.canvas)
-    this.mainArea.onresize = () => this.resize()
-    paper.setup(this.canvas)
+    this.editor = new Editor(this.mainArea)
   }
 
   createTool () {
-    this.tool = new Tool()
+    this.tool = new Tool(this.editor)
     this.mainArea.content.appendChild(this.tool.root)
   }
 
   createSidePanel () {
     this.sidePanel = LiteGUI.sidepanel = new LiteGUI.Panel({
-      title: 'side panel',
       close: true
     })
-    var tabs = new LiteGUI.Tabs()
-    tabs.addTab('图层')
-    tabs.addTab('通道')
-    tabs.addTab('路径')
-    this.sidePanel.add(tabs)
     this.mainArea.getSection(1).add(this.sidePanel)
   }
 
   createInspector () {
-    this.inspector = new LiteGUI.Inspector()
-    var section = this.inspector.addSection('Current Style')
-    this.inspector.setCurrentSection(section)
-    this.inspector.onchange = function (name, value, widget) {
-      paper.project.currentStyle[name] = value
+    this.inspector = new Inspector(this.sidePanel)
+    this.inspector.onchange = (name, value) => {
+      console.log(name, value)
     }
-    this.sidePanel.content.appendChild(this.inspector.root)
-    this.inspector.inspectInstance(paper.project.currentStyle)
+    LiteGUI.bind(this.editor, 'layer.add', (layer) => {
+      console.log(layer)
+    })
+    LiteGUI.bind(this.editor, 'item.change', (item) => {
+      this.inspector.update(item)
+    })
+    LiteGUI.bind(this.editor, 'tool.select', (item) => {
+      console.log(item)
+      this.inspector.update(item)
+    })
   }
 
-  resize () {
-    var rect = this.canvas.parentNode.getClientRects()[0];
-		this.canvas.width = rect.width;
-		this.canvas.height = rect.height;
-  }
-
-  render () {
-    
-  }
 }

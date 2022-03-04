@@ -1,9 +1,13 @@
+import { AddLayer } from "../commands"
+
 export default class Menubar {
-  constructor () {
+  constructor (editor) {
+    this.editor = editor
     this.init()
   }
 
   init () {
+    var editor = this.editor
     var menubar = LiteGUI.menubar
     menubar.add('文件/新建')
     menubar.add('文件/打开')
@@ -18,7 +22,11 @@ export default class Menubar {
     menubar.add('编辑/复制')
     menubar.add('编辑/粘贴')
 
-    menubar.add('图层/新建图层')
+    menubar.add('图层/新建图层', {
+      callback () {
+        editor.execute(new AddLayer(editor))
+      }
+    })
     menubar.add('图层/删除图层')
 
     menubar.add('滤镜/New')

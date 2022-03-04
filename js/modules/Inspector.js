@@ -5,10 +5,24 @@ export default class Inspector {
   }
 
   init () {
-    var inspector = new LiteGUI.Inspector()
-    inspector.onchange = function (name, value, widget) {
-      
+    this.inspector = new LiteGUI.Inspector()
+    // inspector.addList(null, paper.project.layers.map(item => {
+    //   return {
+    //     content: 'hello'
+    //   }
+    // }))
+    this.inspector.onchange = (name, value, widget) => {
+      this.onchange(name,value,widget)
     }
-    this.root.content.appendChild(inspector.root)
+    this.root.content.appendChild(this.inspector.root)
+  }
+
+  onchange () {
+
+  }
+
+  update (data) {
+    this.inspector.clear()
+    this.inspector.inspectInstance(data)
   }
 }

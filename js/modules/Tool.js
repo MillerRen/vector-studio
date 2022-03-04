@@ -10,7 +10,8 @@ export default class Tool {
 
   selectEl = null
 
-  constructor () {
+  constructor (editor) {
+    this.editor = editor
     this.root = document.createElement('ul')
     this.root.setAttribute('id', 'tools')
     this.root.setAttribute('class', 'toolbar')
@@ -33,6 +34,7 @@ export default class Tool {
   }
 
   createTool (tool) {
+    var editor = this.editor
     var icon = document.createElement('svg')
     var el = document.createElement('li')
     el.setAttribute('class', 'tools-item tool tool_'+tool.name)
@@ -49,5 +51,9 @@ export default class Tool {
       this.selectEl = el
     })
     this.root.appendChild(el)
+    tool.onChange = (items) => {
+      console.log(editor)
+      LiteGUI.trigger(editor, 'tool.'+tool.name, items)
+    }
   }
 }
