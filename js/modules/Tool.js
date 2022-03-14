@@ -1,12 +1,8 @@
-import select from '../tools/select'
-import pencil from '../tools/pencil'
+import tools from '../tools'
 
 // TODO: 工具界面
 export default class Tool {
-  tools = {
-    select,
-    pencil,
-  }
+  tools = {}
 
   selectEl = null
 
@@ -28,7 +24,9 @@ export default class Tool {
   }
 
   createTools () {
-    Object.values(this.tools).map(tool => {
+    tools.map(config => {
+      var tool = new paper.Tool(config)
+      this.tools[config.name] = tool
       this.createTool(tool)
     })
   }
